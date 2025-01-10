@@ -1,0 +1,140 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="p-6 bg-gradient-to-r from-[#E0C1F7] via-[#F8B7D0] to-[#A7D9E2] min-h-screen animate-gradient">
+    <!-- Header Section -->
+    <div class="flex flex-col sm:flex-row justify-between items-center mb-8 animate-slideInUp">
+        <div>
+            <h1 class="text-5xl font-extrabold text-white animate-pulse tracking-wide">Dashboard</h1>
+            <p class="text-lg text-white mt-2">Total Order Value: 
+                <span class="bg-white text-black font-bold px-2 py-1 rounded-md shadow-md animate-bounce">${{ total_order_value }}</span>
+            </p>
+        </div>
+        <a href="/create/" class="mt-4 sm:mt-0 bg-gradient-to-r from-purple-500 via-pink-500 to-red-500 text-white px-6 py-3 rounded-lg shadow-lg hover:scale-105 hover:from-red-500 hover:via-pink-500 hover:to-purple-500 transform transition-all duration-300">
+             Create New Order
+        </a>
+    </div>
+
+    <!-- Search Bar -->
+    <div class="flex items-center gap-4 mb-6">
+      <form method="get" action="{% url 'dashboard' %}" class="relative w-full sm:w-1/2">
+          <input type="text" name="search" value="{{ request.GET.search }}" placeholder="Search Orders..." class="border rounded-lg px-4 py-2 w-full shadow-lg focus:outline-none focus:ring-4 focus:ring-pink-500 transition-all duration-200" value="{{ query|default:'' }}" />
+          <button 
+              type="submit" 
+              class="absolute right-2 top-1/2 transform -translate-y-1/2 px-4 py-2 bg-pink-500 text-white text-sm rounded-lg hover:bg-purple-400 hover:scale-105 transition-colors duration-300 ease-in-out transform">
+              Search
+          </button>
+      </form>
+  </div>
+  
+  
+
+    <!-- Orders Table -->
+    <div class="overflow-x-auto bg-white shadow-2xl rounded-lg animate-fadeInUp">
+        <table class="table-auto w-full border-collapse">
+            <thead>
+                <tr class="bg-gray-200 text-left">
+                    <th class="px-6 py-3 text-lg font-semibold text-gray-700">Order ID</th>
+                    <th class="px-6 py-3 text-lg font-semibold text-gray-700">Customer Name</th>
+                    <th class="px-6 py-3 text-lg font-semibold text-gray-700">Customer Email</th>
+                    <th class="px-6 py-3 text-lg font-semibold text-gray-700">Product</th>
+                    <th class="px-6 py-3 text-lg font-semibold text-gray-700">Quantity</th>
+                    <th class="px-6 py-3 text-lg font-semibold text-gray-700">Order Value</th>
+                    <th class="px-6 py-3 text-lg font-semibold text-gray-700">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for order in page_obj %}
+                <tr class="hover:bg-gray-100 transition-all duration-300 transform hover:scale-[1.02]">
+                    <td class="px-6 py-3 text-lg text-gray-800">{{ order.order_id }}</td>
+                    <td class="px-6 py-3 text-lg text-gray-800">{{ order.customer_name }}</td>
+                    <td class="px-6 py-3 text-lg text-gray-800">{{ order.customer_email }}</td>
+                    <td class="px-6 py-3 text-lg text-gray-800">{{ order.product_name.name }}</td>
+                    <td class="px-6 py-3 text-lg text-gray-800">{{ order.quantity }}</td>
+                    <td class="px-6 py-3 text-lg text-gray-800">${{ order.order_value }}</td>
+                    <td class="px-6 py-3 flex gap-4">
+                        <a href="{% url 'edit_order' order_id=order.id %}" class="bg-pink-300 text-black px-4 py-2 rounded-lg shadow-md hover:bg-pink-600 hover:scale-105 transform transition-all duration-200">
+                            Edit
+                        </a>
+                        <a href="/delete/{{ order.order_id }}/" class="bg-purple-800 text-white px-4 py-2 rounded-lg shadow-md hover:bg-purple-400 hover:scale-105 transform transition-all duration-200">
+                            Delete
+                        </a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Pagination -->
+    <div>
+      {% for item in page_obj %}
+        <!-- Render your item -->
+      {% endfor %}
+    </div>
+    
+    <div>
+      {% if page_obj.has_previous %}
+        <a href="?page=1">First</a>
+        <a href="?page={{ page_obj.previous_page_number }}">Previous</a>
+      {% endif %}
+      
+      <span>Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span>
+    
+      {% if page_obj.has_next %}
+        <a href="?page={{ page_obj.next_page_number }}">Next</a>
+        <a href="?page={{ page_obj.paginator.num_pages }}">Last</a>
+      {% endif %}
+    </div>
+</div>
+{% endblock %}
+
+<style>
+  /* High-level Animations */
+  @keyframes fadeInUp {
+    0% {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes slideInUp {
+    0% {
+      opacity: 0;
+      transform: translateY(-100px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes gradientAnimation {
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
+  }
+
+  .animate-gradient {
+    background-size: 400% 400%;
+    animation: gradientAnimation 8s ease infinite;
+  }
+
+  .animate-fadeInUp {
+    animation: fadeInUp 1s ease-out forwards;
+  }
+
+  .animate-slideInUp {
+    animation: slideInUp 1s ease-out forwards;
+  }
+</style>

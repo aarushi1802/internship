@@ -1,0 +1,36 @@
+<!-- templates/account/profile.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Profile</title>
+    <script src="https://cdn.jsdelivr.net/npm/tailwindcss@3.0.7"></script>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.16/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gradient-to-r from-purple-300 via-pink-300 to-red-300 font-sans text-gray-900">
+    <div class="min-h-screen flex flex-col justify-center items-center py-12 px-6 sm:px-8">
+        <div class="w-full max-w-md space-y-8 bg-white rounded-lg shadow-lg p-8">
+            <div>
+                <h1 class="text-4xl font-extrabold text-center text-purple-600 animate__animated animate__fadeIn animate__delay-1s">Welcome to Your Profile</h1>
+                <p class="mt-4 text-lg text-center text-gray-500">Manage your account settings, view orders, and explore more features below.</p>
+            </div>
+            <div class="mt-6 space-y-4">
+                <div class="flex justify-center space-x-4">
+                    <a href="/orders" class="w-full sm:w-1/2 bg-gradient-to-r from-purple-500 via-pink-500 to-red-500 hover:from-red-300 hover:via-pink-300 hover:to-purple-300 text-white text-center py-2 px-4 rounded-lg shadow-md transform transition duration-300 hover:scale-105">View Orders</a>
+                    <a href="/settings" class="w-full sm:w-1/2 bg-gradient-to-r from-purple-500 via-pink-500 to-red-500 hover:from-red-300 hover:via-pink-300 hover:to-purple-300 text-white text-center py-2 px-4 rounded-lg shadow-md transform transition duration-300 hover:scale-105">Account Settings</a>
+                </div>
+                <div class="mt-4 text-center">
+                    <a href="/logout" class="bg-gradient-to-r from-purple-500 via-pink-500 to-red-500 text-white px-6 py-3 rounded-lg shadow-lg transform hover:scale-105 transition-all duration-200">Log Out</a>
+                </div>
+            </div>
+            <div class="mt-6 text-center">
+                <p class="text-gray-500 text-sm">&copy; 2025 Your Business Name. All rights reserved.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Animation library -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" rel="stylesheet">
+</body>
+</html>

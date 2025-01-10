@@ -1,0 +1,110 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="p-6 bg-gradient-to-r from-[#E0C1F7] via-[#F8B7D0] to-[#A7D9E2] min-h-screen animate-gradient">
+    <div class="mb-6 animate-slideInUp">
+        <h1 class="text-4xl text-center font-extrabold text-white">Create a New Order</h1>
+        <p class="text-lg text-center text-white">Fill in the details for the new order below.</p>
+    </div>
+
+    <form method="post" action="{% url 'create_order' %}" class="space-y-6 bg-white p-6 rounded-lg shadow-lg animate-fadeInUp max-w-md mx-auto">
+        {% csrf_token %}
+        
+        <div>
+            <label for="customer_name" class="block text-lg text-center font-medium text-gray-700">Customer Name</label>
+            <input type="text" id="customer_name" name="customer_name" class="border rounded-lg px-4 py-2 w-full shadow-md focus:ring-2 focus:ring-pink-500" required>
+        </div>
+
+        <div>
+            <label for="customer_email" class="block text-lg text-center font-medium text-gray-700">Customer Email</label>
+            <input type="email" id="customer_email" name="customer_email" class="border rounded-lg px-4 py-2 w-full shadow-md focus:ring-2 focus:ring-pink-500" required>
+        </div>
+
+        <div>
+            <label for="product" class="block text-lg text-center font-medium text-gray-700">Product</label>
+            <select id="product" name="product" class="border rounded-lg px-4 py-2 w-full shadow-md focus:ring-2 focus:ring-pink-500" required onchange="calculate_order_value()">
+              <option value="" disabled selected>Select a product</option>
+              <option value="{{ product.id }}" data-price="29">Product 1</option>
+              <option value="{{ product.id }}" data-price="49">Product 2</option>
+              <option value="{{ product.id }}" data-price="149">Product 3</option>
+          </select>
+          
+        </div>
+
+        <div>
+            <label for="quantity" class="block text-lg text-center font-medium text-gray-700">Quantity</label>
+            <input type="number" id="quantity" name="quantity" class="border rounded-lg px-4 py-2 w-full shadow-md focus:ring-2 focus:ring-pink-500" required min="1" onchange="calculate_order_value()">
+        </div>
+
+        <div class="flex justify-between items-center">
+            <button type="submit" class="bg-gradient-to-r from-purple-500 via-pink-500 to-red-500 text-white px-6 py-3 rounded-lg shadow-lg hover:bg-green-600 transform hover:scale-105 transition-all duration-200">
+                Create Order
+            </button>
+            <a href="/dashboard/" class="bg-gradient-to-r from-purple-500 via-pink-500 to-red-500 text-white px-6 py-3 rounded-lg shadow-lg hover:bg-gray-600 transform hover:scale-105 transition-all duration-200">Back To Dashboard</a>
+        </div>
+    </form>
+</div>
+
+{% endblock %}
+
+<style>
+  /* High-level Animations */
+  @keyframes fadeInUp {
+    0% {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes slideInUp {
+    0% {
+      opacity: 0;
+      transform: translateY(-100px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes gradientAnimation {
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
+  }
+
+  .animate-gradient {
+    background-size: 400% 400%;
+    animation: gradientAnimation 10s ease infinite;
+  }
+
+  .animate-fadeInUp {
+    animation: fadeInUp 1s ease-out forwards;
+  }
+
+  .animate-slideInUp {
+    animation: slideInUp 1s ease-out forwards;
+  }
+
+  /* Button Hover Effects */
+  .transform:hover {
+    transform: scale(1.05);
+  }
+
+  /* Input Focus Effects */
+  input:focus {
+    outline: none;
+    box-shadow: 0 0 5px rgba(236, 72, 153, 0.6);
+  }
+</style>
+

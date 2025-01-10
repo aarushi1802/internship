@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h1>Are you sure you want to delete the order?</h1>
+
+  <p>Order Number: {{ order.order_number }}</p>
+  <p>Order Value: {{ order.order_value }}</p>
+  <p>Order Date: {{ order.order_date }}</p>
+
+  <form method="POST" action="{% url 'delete_order' order.order_number %}">
+    {% csrf_token %}
+    <button type="submit">Yes, Delete</button>
+    <a href="{% url 'order_list' %}"><button type="button">Cancel</button></a>
+  </form>
+{% endblock %}

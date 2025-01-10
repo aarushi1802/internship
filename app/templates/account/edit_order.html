@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mx-auto p-8 max-w-4xl bg-white shadow-lg rounded-lg">
+    <h2 class="text-3xl font-semibold text-gray-800 mb-6">Edit Order</h2>
+    
+    <!-- Form Start -->
+    <form method="POST" class="space-y-6">
+        {% csrf_token %}
+        
+        <!-- Form Fields -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+            <div class="space-y-2">
+                <label for="{{ form.customer_name.id_for_label }}" class="block text-lg font-medium text-gray-700">Customer Name</label>
+                <input type="text" name="customer_name" value="{{ form.customer_name.value }}" class="input">
+            </div>
+
+            <div class="space-y-2">
+                <label for="{{ form.customer_email.id_for_label }}" class="block text-lg font-medium text-gray-700">Customer Email</label>
+                <input type="email" name="customer_email" value="{{ form.customer_email.value }}" class="input">
+            </div>
+
+            <div class="space-y-2">
+                <label for="{{ form.product_name.id_for_label }}" class="block text-lg font-medium text-gray-700">Product Name</label>
+                <select name="product_name" class="input">
+                    {% for product in form.product_name.field.queryset %}
+                        <option value="{{ product.id }}" {% if product.id == form.product_name.value %}selected{% endif %}>{{ product.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="space-y-2">
+                <label for="{{ form.quantity.id_for_label }}" class="block text-lg font-medium text-gray-700">Quantity</label>
+                <input type="number" name="quantity" value="{{ form.quantity.value }}" class="input">
+            </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="flex justify-between items-center">
+            <button type="submit" class="w-full sm:w-auto bg-gradient-to-r from-purple-500 via-pink-500 to-red-500 text-white py-3 px-6 rounded-lg shadow-md hover:from-red-400 hover:via-pink-400 hover:to-purple-400 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-50 transition duration-300">Save Changes</button>
+            <a href="/dashboard/" class="bg-gradient-to-r from-purple-500 via-pink-500 to-red-500 text-white px-6 py-3 rounded-lg shadow-lg hover:from-purple-400 hover:via-pink-400 hover:to-red-400 transform hover:scale-105 transition-all duration-200">Back To Dashboard</a>
+        </div>
+    </form>
+</div>
+
+<!-- Optional: Custom CSS to enhance the inputs -->
+<style>
+    .input {
+        width: 100%;
+        padding: 12px;
+        border-radius: 8px;
+        border: 1px solid #e2e8f0;
+        background-color: #f7fafc;
+        font-size: 16px;
+        color: #2d3748;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        transition: all 0.3s ease;
+    }
+
+    .input:focus {
+        border-color: #3182ce;
+        background-color: #fff;
+        outline: none;
+        box-shadow: 0 2px 8px rgba(49, 130, 206, 0.5);
+    }
+
+    .input::placeholder {
+        color: #a0aec0;
+    }
+
+    .input:disabled {
+        background-color: #edf2f7;
+        color: #a0aec0;
+        cursor: not-allowed;
+    }
+</style>
+{% endblock %}
